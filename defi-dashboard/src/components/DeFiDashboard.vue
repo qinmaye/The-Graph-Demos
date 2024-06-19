@@ -6,10 +6,10 @@
     <div v-else>
       <h2>Total Volume (USD): ${{ totalVolumeUSD }}</h2>
       <h2>Total Liquidity (USD): ${{ totalLiquidityUSD }}</h2>
-      <h2>Top 5 Pairs by Volume</h2>
+      <h2>Top 5 Pairs by Volume (Past 24 Hours)</h2>
       <ul>
         <li v-for="pair in pairs" :key="pair.id">
-          {{ pair.token0.symbol }} - {{ pair.token1.symbol }}: ${{ pair.volumeUSD }}
+          {{ pair.token0.symbol }} - {{ pair.token1.symbol }}: ${{ pair.dailyVolumeUSD }}
         </li>
       </ul>
     </div>
@@ -18,25 +18,29 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import UniswapV2Client from '../graphqlClient';
+import { UniswapV2Client } from '../graphqlClient';
 
 const GET_UNISWAP_DATA = `
-  query {
+  query($timestamp: Int!) {
     uniswapFactories(first: 1) {
       totalVolumeUSD
       totalLiquidityUSD
     }
-    pairs(first: 5, orderBy: volumeUSD, orderDirection: desc) {
-      id
-      token0 {
-        symbol
+    pairDayDatas(
+        orderBy: dailyVolumeUSD
+        orderDirection: desc
+        where: {date_gt: $timestamp }
+        first: 5
+      ) {
+        id
+        dailyVolumeUSD
+        token0 {
+          symbol
+        }
+        token1 {
+          symbol
+        }
       }
-      token1 {
-        symbol
-      }
-      volumeUSD
-      reserveUSD
-    }
   }
 `;
 
@@ -48,12 +52,14 @@ export default {
     const totalLiquidityUSD = ref(0);
     const pairs = ref([]);
 
+    const oneDayAgoTimestamp = Math.floor(Date.now() / 1000) - 24 * 60 * 60; // 24 hours ago
+
     onMounted(async () => {
       try {
-        const data = await UniswapV2Client.request(GET_UNISWAP_DATA);
+        const data = await UniswapV2Client.request(GET_UNISWAP_DATA, { timestamp: oneDayAgoTimestamp });
         totalVolumeUSD.value = data.uniswapFactories[0].totalVolumeUSD;
         totalLiquidityUSD.value = data.uniswapFactories[0].totalLiquidityUSD;
-        pairs.value = data.pairs;
+        pairs.value = data.pairDayDatas;
       } catch (err) {
         error.value = err;
       } finally {
