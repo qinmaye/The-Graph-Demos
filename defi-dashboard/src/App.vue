@@ -1,17 +1,18 @@
 <template>
   <div id="app">
-    <Dashboard />
+    <nav>
+      <router-link to="/">DeFi Dashboard</router-link> |
+      <router-link to="/nft-marketplace">NFT Marketplace Tracker</router-link> |
+      <router-link to="/governance-dashboard">Governance Dashboard</router-link> |
+      <router-link to="/blockchain-analytics">Blockchain Analytics</router-link>
+    </nav>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Dashboard from './components/Dashboard.vue';
-
 export default {
   name: 'App',
-  components: {
-    Dashboard,
-  },
 };
 </script>
 
@@ -23,5 +24,19 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+nav {
+  margin-bottom: 20px;
+}
+
+nav a {
+  margin: 0 10px;
+  color: #42b983;
+  text-decoration: none;
+}
+
+nav a.router-link-active {
+  font-weight: bold;
 }
 </style>

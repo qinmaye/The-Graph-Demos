@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import router from './router';
 
-const app = createApp(App);
-
-app.mount('#app');
+console.log(process.env.apikey)
+createApp(App)
+  .use(router)
+  .mount('#app');

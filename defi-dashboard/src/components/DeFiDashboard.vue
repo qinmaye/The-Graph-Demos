@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Uniswap Dashboard</h1>
+    <h1>Uniswap V2 Dashboard</h1>
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">Error: {{ error.message }}</div>
     <div v-else>
@@ -18,7 +18,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import client from '../graphqlClient';
+import UniswapV2Client from '../graphqlClient';
 
 const GET_UNISWAP_DATA = `
   query {
@@ -50,7 +50,7 @@ export default {
 
     onMounted(async () => {
       try {
-        const data = await client.request(GET_UNISWAP_DATA);
+        const data = await UniswapV2Client.request(GET_UNISWAP_DATA);
         totalVolumeUSD.value = data.uniswapFactories[0].totalVolumeUSD;
         totalLiquidityUSD.value = data.uniswapFactories[0].totalLiquidityUSD;
         pairs.value = data.pairs;
@@ -72,7 +72,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
