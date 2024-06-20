@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import DeFiDashboard from '../components/DeFiDashboard.vue';
 import NFTMarketplaceTracker from '../components/NFTMarketplaceTracker.vue';
-import GovernanceDashboard from '../components/GovernanceDashboard.vue';
-import BlockchainAnalytics from '../components/BlockchainAnalytics.vue';
 
 const routes = [
   {
@@ -14,16 +12,6 @@ const routes = [
     path: '/nft-marketplace',
     name: 'NFTMarketplaceTracker',
     component: NFTMarketplaceTracker,
-  },
-  {
-    path: '/governance-dashboard',
-    name: 'GovernanceDashboard',
-    component: GovernanceDashboard,
-  },
-  {
-    path: '/blockchain-analytics',
-    name: 'BlockchainAnalytics',
-    component: BlockchainAnalytics,
   },
 ];
 

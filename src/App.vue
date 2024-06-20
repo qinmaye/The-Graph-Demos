@@ -2,9 +2,7 @@
   <div id="app">
     <nav>
       <router-link to="/">DeFi Dashboard</router-link> |
-      <router-link to="/nft-marketplace">NFT Marketplace Tracker</router-link> |
-      <router-link to="/governance-dashboard">Governance Dashboard</router-link> |
-      <router-link to="/blockchain-analytics">Blockchain Analytics</router-link>
+      <router-link to="/nft-marketplace">NFT Marketplace Tracker</router-link>
     </nav>
     <router-view></router-view>
   </div>
