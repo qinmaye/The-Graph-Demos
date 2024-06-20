@@ -1,4 +1,4 @@
-# defi-dashboard
+# The Graph Demos
 
 ## Project setup
 ```
@@ -22,3 +22,6 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+Don't forget to update `.env.local`
